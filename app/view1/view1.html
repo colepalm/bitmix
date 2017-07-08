@@ -1,17 +1,25 @@
 <div class="container" style="padding: 5px;">
 
-    <!--<p>You have {{userCoins}} coins in your account.</p>-->
-
-    <div class="row" ng-repeat="row in addresses track by $index" style="padding-left:10px;">
-        <div class="row">
-            <div class="col-sm-12 col-xs-12">
-                <div class="custom-angularstrap">
-                    <input type="text" size="8" class="form-control" ng-model="row.address" placeholder="Account Address" ng-change="handleRowChange($index)">
-                </div>
-            </div>
+    <div class="col-sm-10 col-xs-10">
+        <div class="custom-angularstrap">
+            <input type="text" size="8" class="form-control" ng-model="toAdd" placeholder="Account Address">
         </div>
+    </div>
+    <div class="col-sm-2 col-xs-2 buttons responsive-buttons pull-right header-button-group">
+        <a ng-click="removeRow()" class="btn icon-import btn-default header-button clickable glyphicon glyphicon-remove"></a>
+    </div>
 
-    <div class="buttons responsive-buttons pull-right header-button-group">
-        <a ng-click="mixCoins()" class="btn icon-import btn-default header-button clickable">Mix Coins</a>
+
+    <div class="col-xs-12 buttons responsive-buttons header-button-group" style="margin-top: 5px;">
+        <a ng-click="addAddress()" class="btn icon-import btn-default header-button clickable">Add Address</a>
+    </div>
+
+    <div ng-repeat="row in accounts track by $index" style="margin-top: 100px">
+        <div class="col-sm-6 col-xs-6">
+            <p>Account number: {{row.accountNumber}}</p>
+        </div>
+        <div class="col-sm-6 col-xs-6">
+            <p>You have {{row.balance}} coins in this account.</p>
+        </div>
     </div>
 </div>

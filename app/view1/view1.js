@@ -11,8 +11,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
 .controller('View1Ctrl', [
     '$scope', '$http', function($scope, $http) {
-        $scope.addresses = [];
-        $scope.addresses[0] = {};
+        $scope.accounts = [];
 
         function init() {
             $http({
@@ -20,17 +19,6 @@ angular.module('myApp.view1', ['ngRoute'])
                 url: 'http://jobcoin.projecticeland.net/incumber/api/addresses/1'
             }).then(function successCallback(response) {
                 $scope.bank = response.data.balance;
-            }, function errorCallback(response) {
-                console.warn(response);
-            });
-
-            $http({
-                method: 'GET',
-                url: 'http://jobcoin.projecticeland.net/incumber/api/addresses/2'
-            }).then(function successCallback(response) {
-                $scope.userCoins = response.data.balance;
-            }, function errorCallback(response) {
-                console.warn(response);
             });
         }
 
@@ -40,9 +28,32 @@ angular.module('myApp.view1', ['ngRoute'])
 
         };
 
-        $scope.handleRowChange = function (index) {
-            if ($scope.addresses[index].address > 0 && !$scope.address[index+1]) {
-                $scope.addresses[index+1] = {};
+        $scope.addAddress = function () {
+            var found = false;
+            var accounts = $scope.accounts;
+            for(var i = 0; i < accounts.length; i++) {
+                if (accounts[i].Address === $scope.toAdd) {
+                    found = true;
+                    break;
+                }
             }
+
+            if (!angular.isNumber(parseInt($scope.toAdd)) || found) {
+                $scope.errorMessage = 'Please enter a valid address';
+                return;
+            }
+
+            $http({
+                method: 'GET',
+                url: 'http://jobcoin.projecticeland.net/incumber/api/addresses/' + $scope.toAdd
+            }).then(function successCallback(response) {
+                var newAccount = {
+                    accountNumber: $scope.toAdd,
+                    balance: response.data.balance,
+                    transactions: response.data.transactions
+                };
+
+                $scope.accounts.push(newAccount);
+            });
         }
 }]);
