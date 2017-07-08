@@ -42,9 +42,10 @@ angular.module('myApp.view1', ['ngRoute'])
         }).then(function successCallback(response) {
           if (response.data.balance === '0')
             return i;
-          returnAddress = request(i+1);
+          returnAddress = $scope.request(Math.floor( Math.random() * ( 1 + 200 - 100 ) ) + 100);
+          console.log(returnAddress);
         });
-        console.log(returnAddress);
+
       };
 
       $scope.addAddress = function () {
