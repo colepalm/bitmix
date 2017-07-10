@@ -1,0 +1,8 @@
+<div ng-repeat="row in accounts track by $index">
+    <div class="col-sm-6 col-xs-6">
+        <p>Account number: {{row.accountNumber}}</p>
+    </div>
+    <div class="col-sm-6 col-xs-6">
+        <p>You have {{row.balance}} coins in this account.</p>
+    </div>
+</div>
