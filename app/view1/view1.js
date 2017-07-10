@@ -10,7 +10,7 @@ angular.module('myApp.view1', ['ngRoute'])
 }])
 
 .controller('View1Ctrl', [
-    '$scope', '$http', function($scope, $http) {
+    '$scope', '$http', '$location', function($scope, $http, $location) {
       $scope.accounts = [];
 
       //populate bank with account #1
@@ -33,20 +33,28 @@ angular.module('myApp.view1', ['ngRoute'])
         localStorage.setItem('accounts', $scope.accounts)
       });
 
-      $scope.request = function (i) {
-        var returnAddress;
+      $scope.request = function () {
+        var returnAddress = 2;
+        var addr = -1;
 
+        while(addr < 0) {
+          returnAddress = Math.floor( Math.random() * ( 1 + 200 - 100 ) ) + 100;
+          addr = findOpenAddress(returnAddress)
+        }
+        localStorage.setItem('sendAddress', addr);
+        $location.path('/view2');
+      };
+
+      function findOpenAddress(random) {
         $http({
           method: 'GET',
-          url: 'http://jobcoin.projecticeland.net/incumber/api/addresses/' + i
+          url: 'http://jobcoin.projecticeland.net/incumber/api/addresses/' + random
         }).then(function successCallback(response) {
-          if (response.data.balance === '0')
-            return i;
-          returnAddress = $scope.request(Math.floor( Math.random() * ( 1 + 200 - 100 ) ) + 100);
-          console.log(returnAddress);
+          if (response.data.balance !== '0')
+            random = -1;
         });
-
-      };
+        return random;
+      }
 
       $scope.addAddress = function () {
         var found = false;
@@ -77,6 +85,18 @@ angular.module('myApp.view1', ['ngRoute'])
 
           $scope.accounts.push(newAccount);
           $scope.toAdd = '';
+          addAccountNumbers();
         });
+
+      };
+
+      function addAccountNumbers() {
+        var accountNumbers = [];
+
+        $scope.accounts.forEach(function(account) {
+          accountNumbers.push(account.accountNumber);
+        });
+
+        localStorage.setItem('accountNumbers', accountNumbers);
       }
 }]);

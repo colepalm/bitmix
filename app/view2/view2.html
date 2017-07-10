@@ -1,5 +1,29 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<div class="container" style="padding: 5px;">
+
+    <div class="col-sm-11 col-xs-11">
+        <p>The address to transfer to is <span style="font-weight:bold">{{send}}</span></p>
+    </div>
+
+    <div class="col-xs-12 buttons responsive-buttons header-button-group" style="margin-top: 5px;">
+        <a ng-click="mix()" class="btn icon-import btn-default header-button clickable btn-success">Mix coins!</a>
+    </div>
+
+    <div ng-repeat="row in accounts track by $index" style="margin-top: 100px">
+        <div ng-if="!row.hasTransferred" class="row">
+            <div class="col-sm-4 col-xs-4">
+                <p>Account number: {{row.accountNumber}}</p>
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <p>You have {{row.balance}} coins in this account.</p>
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <div class="buttons responsive-buttons header-button-group" style="margin-top: 5px;">
+                    <a ng-click="transfer($index)" class="btn icon-import btn-default header-button clickable">Transfer to {{send}}</a>
+                </div>
+            </div>
+        </div>
+        <div ng-if="row.hasTransferred" class="alert alert-success">
+            <strong>Successfully transferred!</strong>
+        </div>
+    </div>
+</div>
