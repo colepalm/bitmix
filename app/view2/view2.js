@@ -64,23 +64,38 @@ angular.module('myApp.view2', ['ngRoute'])
           url: 'http://jobcoin.projecticeland.net/incumber/api/addresses/' + $scope.send
         }).then(function successCallback(response) {
           distribute(response.data.balance);
+          $location.path('/complete-transfer');
         });
-
-        $location.path('/complete-transfer')
       };
 
       function distribute(balance) {
-        var recieveNum = $scope.recieveNumbers.length;
+        var recieveNum = $scope.recieveNumbers;
         balance = balance - Math.floor(balance * .1);
 
-        for (var i=0; i<recieveNum; i++) {
+        for (var i=0; i<recieveNum.length; i++) {
           var toSend = getRandomArbitrary(balance, 0);
+          var num = recieveNum[i];
+          var fromAddress = $scope.send;
+
+          if (balance - toSend === 1)
+            toSend += 1;
+
           $http({
             method: 'POST',
             url: 'http://jobcoin.projecticeland.net/incumber/api/transactions',
             params: {
-              fromAddress: $scope.toSend,
-              toAddress: recieveNum[i],
+              fromAddress: 1,
+              toAddress: num,
+              amount: toSend
+            }
+          });
+
+          $http({
+            method: 'POST',
+            url: 'http://jobcoin.projecticeland.net/incumber/api/transactions',
+            params: {
+              fromAddress: fromAddress,
+              toAddress: 1,
               amount: toSend
             }
           });
@@ -91,6 +106,6 @@ angular.module('myApp.view2', ['ngRoute'])
       }
 
     function getRandomArbitrary(max, min) {
-      return Math.random() * (max - min) + min;
+      return Math.floor(Math.random() * (max - min) + min);
     }
 }]);
