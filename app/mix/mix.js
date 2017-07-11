@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp.view2', ['ngRoute'])
+angular.module('myApp.mix', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view2', {
-    templateUrl: 'view2/view2.html',
-    controller: 'View2Ctrl'
+  $routeProvider.when('/mix', {
+    templateUrl: 'mix/mix.html',
+    controller: 'mixCtrl'
   });
 }])
 
-.controller('View2Ctrl', [
+.controller('mixCtrl', [
     '$scope', '$http', '$location', function($scope, $http, $location) {
       $scope.accounts = [];
 
@@ -17,9 +17,9 @@ angular.module('myApp.view2', ['ngRoute'])
       function init() {
         $scope.send = localStorage.getItem('sendAddress');
         var accountNumbers = localStorage.getItem('accountNumbers');
-        var recieveNumbers = localStorage.getItem('recieveNumbers');
+        var receiveNumbers = localStorage.getItem('receiveNumbers');
         accountNumbers = parseAccountNumbers(accountNumbers);
-        $scope.recieveNumbers = parseAccountNumbers(recieveNumbers);
+        $scope.receiveNumbers = parseAccountNumbers(receiveNumbers);
         fillAccounts(accountNumbers);
       }
       init();
@@ -69,12 +69,12 @@ angular.module('myApp.view2', ['ngRoute'])
       };
 
       function distribute(balance) {
-        var recieveNum = $scope.recieveNumbers;
+        var receiveNum = $scope.receiveNumbers;
         balance = balance - Math.floor(balance * .1);
 
-        for (var i=0; i<recieveNum.length; i++) {
+        for (var i=0; i<receiveNum.length; i++) {
           var toSend = getRandomArbitrary(balance, 0);
-          var num = recieveNum[i];
+          var num = receiveNum[i];
           var fromAddress = $scope.send;
 
           if (balance - toSend === 1)
@@ -101,7 +101,6 @@ angular.module('myApp.view2', ['ngRoute'])
           });
 
           balance = balance - toSend;
-          console.log(balance);
         }
       }
 

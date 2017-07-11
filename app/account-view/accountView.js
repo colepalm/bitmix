@@ -12,7 +12,7 @@ angular.module('myApp.view1', ['ngRoute'])
 .controller('View1Ctrl', [
     '$scope', '$http', '$location', function($scope, $http, $location) {
       $scope.accounts = [];
-      $scope.recieve = [];
+      $scope.receive = [];
 
       //populate bank with account #1
       function init() {
@@ -101,36 +101,36 @@ angular.module('myApp.view1', ['ngRoute'])
         localStorage.setItem('accountNumbers', accountNumbers);
       }
 
-      function recieveAccountNumbers() {
+      function receiveAccountNumbers() {
         var accountNumbers = [];
 
-        $scope.recieve.forEach(function(account) {
+        $scope.receive.forEach(function(account) {
           accountNumbers.push(account.accountNumber);
         });
 
-        localStorage.setItem('recieveNumbers', accountNumbers);
+        localStorage.setItem('receiveNumbers', accountNumbers);
       }
 
-      $scope.recieveAddress = function() {
+      $scope.receiveAddress = function() {
         var found = false;
         var accounts = $scope.receive;
 
         if (accounts) {
           for (var i = 0; i < accounts.length; i++) {
-            if (accounts[i].Address === $scope.toRecieve) {
+            if (accounts[i].Address === $scope.toreceive) {
               found = true;
               break;
             }
           }
         }
 
-        if (!angular.isNumber(parseInt($scope.toRecieve)) || found || $scope.toRecieve === '1') {
-          $scope.errorMessageRecieve = 'Please enter a valid address (address 1 is the bank)';
+        if (!angular.isNumber(parseInt($scope.toreceive)) || found || $scope.toreceive === '1') {
+          $scope.errorMessagereceive = 'Please enter a valid address (address 1 is the bank)';
           return;
         }
 
-        $scope.recieve.push($scope.toRecieve);
-        $scope.toRecieve = '';
-        recieveAccountNumbers();
+        $scope.receive.push($scope.toreceive);
+        $scope.toreceive = '';
+        receiveAccountNumbers();
       }
 }]);
