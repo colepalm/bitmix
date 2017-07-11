@@ -1,25 +1,21 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.accountView', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
+  $routeProvider.when('/account-view', {
+    templateUrl: 'account-view/account-view.html',
+    controller: 'accountCtrl'
   });
 }])
 
-.controller('View1Ctrl', [
+.controller('accountCtrl', [
     '$scope', '$http', '$location', function($scope, $http, $location) {
       $scope.accounts = [];
       $scope.receive = [];
 
       //populate bank with account #1
       function init() {
-        // var stored = localStorage.getItem('accounts');
-        // if (stored)
-        //   $scope.accounts = stored;
-
         $http({
             method: 'GET',
             url: 'http://jobcoin.projecticeland.net/incumber/api/addresses/1'
@@ -43,7 +39,7 @@ angular.module('myApp.view1', ['ngRoute'])
           addr = findOpenAddress(returnAddress)
         }
         localStorage.setItem('sendAddress', addr);
-        $location.path('/view2');
+        $location.path('/mix');
       };
 
       function findOpenAddress(random) {

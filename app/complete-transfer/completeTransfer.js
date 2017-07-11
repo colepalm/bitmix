@@ -15,7 +15,7 @@ angular.module('myApp.completeTransfer', ['ngRoute'])
 
     //populate bank with account #1
     function init() {
-      var toParse = localStorage.getItem('recieveNumbers');
+      var toParse = localStorage.getItem('receiveNumbers');
 
       $scope.accounts = parseAccountNumbers(toParse);
 
