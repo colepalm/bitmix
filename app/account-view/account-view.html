@@ -16,7 +16,7 @@
     <div style="margin-top: 100px;">
         <div class="col-sm-11 col-xs-11">
             <div class="custom-angularstrap">
-                <input type="text" size="8" class="form-control" ng-model="toreceive" placeholder="receive Account Address">
+                <input type="text" size="8" class="form-control" ng-model="toreceive" placeholder="Receive Account Address">
             </div>
         </div>
         <div class="buttons responsive-buttons pull-right header-button-group">
@@ -24,20 +24,32 @@
         </div>
 
         <div class="col-xs-12 buttons responsive-buttons header-button-group" style="margin-top: 5px;">
-            <a ng-click="receiveAddress()" class="btn icon-import btn-default header-button clickable">Add receive Address</a>
+            <a ng-click="receiveAddress()" class="btn icon-import btn-default header-button clickable">Add Receive Address</a>
         </div>
     </div>
 
-    <div ng-repeat="row in accounts track by $index" style="margin-top: 100px">
-        <div class="col-sm-6 col-xs-6">
-            <p>Account number: {{row.accountNumber}}</p>
-        </div>
-        <div class="col-sm-6 col-xs-6">
-            <p>You have {{row.balance}} coins in this account.</p>
+    <div class="container" style="padding-top:90px;">
+        <div ng-repeat="row in accounts track by $index">
+            <div class="col-sm-6 col-xs-6">
+                <p>Account number: {{row.accountNumber}}</p>
+            </div>
+            <div class="col-sm-6 col-xs-6">
+                <p>You have {{row.balance}} coins in this account.</p>
+            </div>
         </div>
     </div>
 
-    <div ng-if="accounts.length > 0">
+    <div class="container" style="padding-top:10px;">
+        <div ng-repeat="row in receive track by $index">
+            <div class="col-sm-6 col-xs-6">
+                <p>Account number: {{row}}</p>
+            </div>
+            <div class="col-sm-6 col-xs-6">
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="accounts.length > 0 && receive.length > 0" class="row">
         <div class="col-sm-6 col-xs-6">
             <div class="buttons responsive-buttons header-button-group" style="margin-top: 5px;">
                 <a ng-click="request()" class="btn icon-import btn-default header-button clickable">Request Mix Address</a>

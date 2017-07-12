@@ -101,7 +101,7 @@ angular.module('myApp.accountView', ['ngRoute'])
         var accountNumbers = [];
 
         $scope.receive.forEach(function(account) {
-          accountNumbers.push(account.accountNumber);
+          accountNumbers.push(account);
         });
 
         localStorage.setItem('receiveNumbers', accountNumbers);
